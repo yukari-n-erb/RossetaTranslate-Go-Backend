@@ -40,7 +40,7 @@ func TestDeepLAPI(t *testing.T) {
 		TranslateServer(response, request)
 
 		got := response.Body.String()
-		want := "\"ゲームをしたいですか？\""
+		want := `{"message":"ゲームをしたいですか？"}`
 
 		if got != want {
 			t.Errorf("got %q, want %q", got, want)

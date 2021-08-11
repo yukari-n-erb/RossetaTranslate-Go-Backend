@@ -17,6 +17,10 @@ type Message struct {
 	Text string `json:"text"`
 }
 
+type TranslateText struct {
+	Message string `json:"message"`
+}
+
 func TranslateServer(w http.ResponseWriter, r *http.Request) {
 	translator := strings.TrimPrefix(r.URL.Path, "/")
 	if translator == "deepl" {
@@ -43,7 +47,11 @@ func TranslateServer(w http.ResponseWriter, r *http.Request) {
 
 			msgTranslated := DeeplApiTranslate(msg.Text)
 
-			output, err := json.Marshal(msgTranslated)
+			values := TranslateText{
+				Message: msgTranslated,
+			}
+
+			output, err := json.Marshal(values)
 			fmt.Println(string(output))
 			if err != nil {
 				http.Error(w, err.Error(), 500)
